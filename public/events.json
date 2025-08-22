@@ -1,0 +1,190 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Michael Turner",
+      "image": "https://wincacademy.github.io/webpages/media/person6.jpeg"
+    },
+    {
+      "id": 2,
+      "name": "Sophia Collins",
+      "image": "https://wincacademy.github.io/webpages/media/article-author.png"
+    },
+    {
+      "id": 3,
+      "name": "Emily Carter",
+      "image": "https://wincacademy.github.io/webpages/media/person9.jpeg"
+    },
+    {
+      "id": 9,
+      "name": "Thang"
+    },
+    {
+      "id": 5,
+      "name": "Thang"
+    },
+    {
+      "id": 6,
+      "name": "Thang"
+    },
+    {
+      "id": 7,
+      "name": "Thang"
+    },
+    {
+      "id": 1746132634304,
+      "name": "Peeter"
+    },
+    {
+      "id": 1746132728783,
+      "name": "Peeter"
+    }
+  ],
+  "events": [
+    {
+      "id": 3,
+      "createdBy": 2,
+      "title": "Badminton game",
+      "description": "Hit that shuttle!",
+      "image": "https://wincacademy.github.io/webpages/media/pexels-vladvictoria-2202685.jpg",
+      "categoryIds": [
+        1,
+        2
+      ],
+      "location": "The Park",
+      "startTime": "2023-03-15T12:00:00.000Z",
+      "endTime": "2023-03-15T13:30:00.000Z"
+    },
+    {
+      "id": 4,
+      "createdBy": 2,
+      "title": "Yoga",
+      "description": "It's a bit of a stretch.",
+      "image": "https://wincacademy.github.io/webpages/media/pexels-gabby-k-5384538.jpg",
+      "categoryIds": [
+        3
+      ],
+      "location": "Shavasana Yoga School",
+      "startTime": "2023-03-09T06:00:00.000Z",
+      "endTime": "2023-03-09T07:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "createdBy": 2,
+      "title": "Tennis",
+      "description": "Serving up fun on the court.",
+      "image": "https://wincacademy.github.io/webpages/media/pexels-floriandoppler-3207474.jpg",
+      "categoryIds": [
+        1
+      ],
+      "location": "Grand Slam Tennis Court",
+      "startTime": "2023-03-09T08:00:00.000Z",
+      "endTime": "2023-03-09T10:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "createdBy": 5,
+      "title": "Board games night",
+      "description": "Roll the dice and join the fun!",
+      "image": "https://wincacademy.github.io/webpages/media/pexels-tima-miroshnichenko-6598746.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "Community Hall",
+      "startTime": "2023-03-13T18:00:00.000Z",
+      "endTime": "2023-03-13T21:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "createdBy": 2,
+      "title": "Tea tasting",
+      "description": "Savor the soothing flavors of herbal teas.",
+      "image": "https://wincacademy.github.io/webpages/media/pexels-viktoria-alipatova-1083711-2130137.jpg",
+      "categoryIds": [
+        3
+      ],
+      "location": "Cozy Tea House",
+      "startTime": "2023-03-17T15:00:00.000Z",
+      "endTime": "2023-03-17T17:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "createdBy": 6,
+      "title": "Nature walk",
+      "description": "Connect with nature and clear your mind.",
+      "image": "https://wincacademy.github.io/webpages/media/hiking.png",
+      "categoryIds": [
+        3
+      ],
+      "location": "Forest Trailhead",
+      "startTime": "2023-03-16T07:00:00.000Z",
+      "endTime": "2023-03-16T09:30:00.000Z"
+    },
+    {
+      "id": 9,
+      "createdBy": 3,
+      "title": "Bowling night",
+      "description": "Strike up some fun with friends at the lanes!",
+      "image": "https://wincacademy.github.io/webpages/media/pexels-rnnzeravac-9273055.jpg",
+      "categoryIds": [
+        2
+      ],
+      "location": "Downtown Bowling Alley",
+      "startTime": "2023-03-19T18:00:00.000Z",
+      "endTime": "2023-03-19T21:00:00.000Z"
+    },
+    {
+      "id": 1746129462136,
+      "createdBy": 7,
+      "title": "Pickleball",
+      "description": "jsjsjs",
+      "image": "https://www.news-leader.com/gcdn/-mm-/c7916574e011bf073d8a1ca8f27eb1d8f582e876/c=0-133-2624-1615/local/-/media/2016/06/14/Springfield/Springfield/636015219467226034-Pickleball.jpg",
+      "categoryIds": [
+        "1"
+      ],
+      "location": "Rotterdam",
+      "startTime": "2025-05-03T14:00",
+      "endTime": "2025-05-03T16:00"
+    },
+    {
+      "id": 1746129747393,
+      "createdBy": "1",
+      "title": "Basketball",
+      "description": "jsfs",
+      "image": "https://finnsbeachclub.com/wp-content/uploads/2024/09/basketball-court-ball-and-sports-match-or-competi-2023-11-27-04-58-17-utc-1024x683.jpg",
+      "location": "Goes",
+      "categoryIds": [
+        "1"
+      ],
+      "startTime": "2025-05-05T13:00",
+      "endTime": "2025-05-05T17:00"
+    },
+    {
+      "id": 1746260038917,
+      "createdBy": 9,
+      "title": "Outside football",
+      "description": "jkfhkagehjkagjh",
+      "image": "https://www.u-sport.com/content/uploads/2024/07/19.6.24-USports-Voetbal-Alwin-van-Wijngaarden-279-e1724159526290-2000x1113.jpg",
+      "location": "Rotterdam",
+      "categoryIds": [
+        "2"
+      ],
+      "startTime": "2025-05-08T13:00",
+      "endTime": "2025-05-08T16:00"
+    }
+  ],
+  "categories": [
+    {
+      "name": "sports",
+      "id": 1
+    },
+    {
+      "name": "games",
+      "id": 2
+    },
+    {
+      "name": "relaxation",
+      "id": 3
+    }
+  ]
+}

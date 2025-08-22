@@ -9,6 +9,11 @@ import { EventAdd } from "./components/EventAdd";
 import { CategoriesProvider } from "./contexts/CategoriesContext";
 import { UsersProvider } from "./contexts/UsersContext";
 
+import { installMockApi } from "./utils/mockApi";
+
+// Install client-side mock API before app renders
+installMockApi();
+
 const router = createBrowserRouter([
   {
     path: "/",

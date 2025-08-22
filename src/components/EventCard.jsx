@@ -6,7 +6,7 @@ import { formatDate, formatTime } from "../utils/DateUtils";
 //------------------
 
 export const EventCard = ({ event, creator }) => {
-  console.log("Event categorieën in EventCard456:", event.categories);
+  console.log("Event categories in EventCard456:", event.categories);
   return (
     <Link to={`/events/${event.id}`}>
       <Card
@@ -53,7 +53,7 @@ export const EventCard = ({ event, creator }) => {
               noOfLines={3}
               overflow="hidden"
               textOverflow="ellipsis"
-              flex="1" // Laat de beschrijving de ruimte vullen
+              flex="1" // Laat de description de ruimte vullen
             >
               {event.description}
             </Text>
@@ -85,8 +85,8 @@ export const EventCard = ({ event, creator }) => {
                 Time:
               </Text>
               <Text w="auto">
-                {formatTime(event.startTime)} t/m {formatTime(event.endTime)}{" "}
-                uur.
+                {formatTime(event.startTime)} to {formatTime(event.endTime)}{" "}
+                .
               </Text>
             </Flex>
           </Text>

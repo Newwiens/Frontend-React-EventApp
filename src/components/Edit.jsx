@@ -1,4 +1,4 @@
-//Component in EventPage om wijzigen en verwijderen
+//Component in EventPage om edit en delete
 
 import {
   Modal,
@@ -53,7 +53,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
     ) {
       toast({
         title: "Verplichte velden ontbreken",
-        description: "Title, omschrijving, datum en tijd zijn verplicht.",
+        description: "Title, description, date en time zijn verplicht.",
         status: "warning",
         duration: 4000,
         isClosable: true,
@@ -71,21 +71,21 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
           body: JSON.stringify(editData),
         }
       );
-      if (!response.ok) throw new Error("Update mislukt");
+      if (!response.ok) throw new Error("Update failed");
       const updated = await response.json();
       onEventUpdated(updated);
       onClose();
       toast({
-        title: "Succesvol opgeslagen",
-        description: "Het evenement is bijgewerkt.",
+        title: "Saved successfully",
+        description: "The event has been updated.",
         status: "success",
         duration: 4000,
         isClosable: true,
       });
     } catch (err) {
       toast({
-        title: "Error bij opslaan",
-        description: err.message || "Onbekende fout",
+        title: "Error bij save",
+        description: err.message || "Onbekende error",
         status: "error",
         duration: 4000,
         isClosable: true,
@@ -105,7 +105,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
       if (!response.ok) throw new Error("Delete mislukt");
       toast({
         title: "Event verwijderd",
-        description: "Het evenement is succesvol verwijderd.",
+        description: "Het event is succesvol verwijderd.",
         status: "success",
         duration: 4000,
         isClosable: true,
@@ -115,8 +115,8 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
       navigate("/events");
     } catch (err) {
       toast({
-        title: "Error bij verwijderen",
-        description: err.message || "Onbekende fout",
+        title: "Error bij delete",
+        description: err.message || "Onbekende error",
         status: "error",
         duration: 4000,
         isClosable: true,
@@ -131,7 +131,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Event bewerken</ModalHeader>
+          <ModalHeader>Event edit</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl mb={3}>
@@ -166,7 +166,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
 
             {/* Start Date en Time */}
             <FormControl mb={3}>
-              <FormLabel>Startdatum en tijd</FormLabel>
+              <FormLabel>Start date and time</FormLabel>
               <Input
                 type="datetime-local"
                 value={editData.startTime || ""}
@@ -176,9 +176,9 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
               />
             </FormControl>
 
-            {/* Eind Date en Time */}
+            {/* End date and time */}
             <FormControl mb={3}>
-              <FormLabel>Einddatum en tijd</FormLabel>
+              <FormLabel>End date and time</FormLabel>
               <Input
                 type="datetime-local"
                 value={editData.endTime || ""}
@@ -199,7 +199,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
               mr={3}
               isLoading={isDeleting}
             >
-              Verwijder
+              Delete
             </Button>
             <Button
               colorScheme="blue"
@@ -212,7 +212,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
         </ModalContent>
       </Modal>
 
-      {/* Confirmatie dialoog voor verwijderen */}
+      {/* Confirmatie dialoog voor delete */}
       <AlertDialog
         isOpen={isDeleteDialogOpen}
         leastDestructiveRef={cancelRef}
@@ -221,11 +221,11 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Event verwijderen
+              Event delete
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Weet je zeker dat je dit evenement wilt verwijderen? Deze actie
+              Weet je zeker dat je dit event wilt delete? Deze actie
               kan niet ongedaan worden gemaakt.
             </AlertDialogBody>
 
@@ -239,7 +239,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
                 ml={3}
                 isLoading={isDeleting}
               >
-                Verwijder
+                Delete
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

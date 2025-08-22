@@ -1,4 +1,4 @@
-//hergebruiken context: users label v.d aanmaken event.
+//hergebruiken context: users label v.d create event.
 
 import { createContext, useContext, useEffect, useState } from "react";
 

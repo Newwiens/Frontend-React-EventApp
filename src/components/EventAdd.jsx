@@ -1,4 +1,4 @@
-//Component nieuwe evenement toevoegen
+//Component nieuwe event add
 
 import { useState } from "react";
 import {
@@ -31,17 +31,17 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
   const [error, setError] = useState();
 
   const fields = [
-    { name: "newUser", placeholder: "Jouw naam", type: "text" },
+    { name: "newUser", placeholder: "Jouw name", type: "text" },
     { name: "image", placeholder: "Alleen URL voor afbeelding", type: "text" },
-    { name: "title", placeholder: "Title van het evenement", type: "text" },
+    { name: "title", placeholder: "Title van het event", type: "text" },
     {
       name: "description",
-      placeholder: "Description van het evenement",
+      placeholder: "Description van het event",
       type: "textarea",
     },
     {
       name: "location",
-      placeholder: "Location van het evenement",
+      placeholder: "Location van het event",
       type: "text",
     },
     { name: "startTime", placeholder: "Starttijd", type: "datetime-local" },
@@ -76,7 +76,7 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
     ];
 
     // Extra controle voor "Sport"-velden als "Sport" is geselecteerd
-    const isSportSelected = formData.categoryIds.includes("sport"); // Voorbeeld categorie-ID
+    const isSportSelected = formData.categoryIds.includes("sport"); // Voorbeeld category-ID
     if (isSportSelected && (!formData.playerCount || !formData.level)) {
       setError(
         "Vul het aantal spelers en niveau in als 'Sport' is geselecteerd."
@@ -109,9 +109,9 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newUser),
           });
-          if (!usersResponse.ok) throw new Error("User toevoegen mislukt");
+          if (!usersResponse.ok) throw new Error("Failed to add user");
         } catch (error) {
-          setError("Error bij het toevoegen van een nieuwe gebruiker.");
+          setError("Error bij het add van een nieuwe user.");
           return;
         }
       }
@@ -140,7 +140,7 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
         body: JSON.stringify(newEvent),
       });
 
-      if (!eventResponse.ok) throw new Error("Event toevoegen mislukt");
+      if (!eventResponse.ok) throw new Error("Failed to add event");
 
       const savedEvent = await eventResponse.json();
       onAddEvent(savedEvent);
@@ -159,8 +159,8 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
         level: "",
       });
     } catch (error) {
-      setError("Error bij het toevoegen van het evenement.");
-      console.error("Error bij het toevoegen van het evenement:", error);
+      setError("Error bij het add van het event.");
+      console.error("Error bij het add van het event:", error);
     }
   };
 
@@ -169,7 +169,7 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
   );
 
   // Controleer of "Sport" is geselecteerd
-  const isSportSelected = formData.categoryIds.includes("sport"); // Pas "sport" aan naar de juiste categorie-ID
+  const isSportSelected = formData.categoryIds.includes("sport"); // Pas "sport" aan naar de juiste category-ID
 
   return (
     <Box

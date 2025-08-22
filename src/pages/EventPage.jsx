@@ -60,10 +60,10 @@ export const EventPage = () => {
       const response = await fetch(`http://localhost:3000/events/${id}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error("Delete mislukt");
+      if (!response.ok) throw new Error("Delete failed");
       toast({
-        title: "Event verwijderd",
-        description: "Het evenement is succesvol verwijderd.",
+        title: "Event deleted",
+        description: "The event was deleted successfully.",
         status: "success",
         duration: 4000,
         isClosable: true,
@@ -72,8 +72,8 @@ export const EventPage = () => {
       navigate("/events");
     } catch (err) {
       toast({
-        title: "Error bij verwijderen",
-        description: err.message || "Onbekende fout",
+        title: "Error bij delete",
+        description: err.message || "Onbekende error",
         status: "error",
         duration: 4000,
         isClosable: true,
@@ -183,7 +183,7 @@ export const EventPage = () => {
               padding="0.5rem"
               w="100%"
             >
-              {/* Date en tijd box */}
+              {/* Date en time box */}
               <Box w="50%">
                 <Flex direction="row" gap="0.5rem">
                   <Text w="2.1rem" fontWeight="700">
@@ -196,8 +196,8 @@ export const EventPage = () => {
                     Time:
                   </Text>
                   <Text w="auto">
-                    {formatTime(event.startTime)} t/m{" "}
-                    {formatTime(event.endTime)} uur.
+                    {formatTime(event.startTime)} to{" "}
+                    {formatTime(event.endTime)}.
                   </Text>
                 </Flex>
               </Box>
@@ -213,7 +213,7 @@ export const EventPage = () => {
                     bg="#a0d3f2"
                     color="black"
                   >
-                    Bewerk
+                    Edit
                   </Button>
                   <Button
                     onClick={openDeleteDialog}
@@ -221,7 +221,7 @@ export const EventPage = () => {
                     fontSize="1em"
                     colorScheme="red"
                   >
-                    Verwijder
+                    Delete
                   </Button>
                 </Flex>
               </Box>
@@ -247,11 +247,11 @@ export const EventPage = () => {
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Event verwijderen
+                Event delete
               </AlertDialogHeader>
 
               <AlertDialogBody>
-                Weet je zeker dat je dit evenement wilt verwijderen? Deze actie
+                Weet je zeker dat je dit event wilt delete? Deze actie
                 kan niet ongedaan worden gemaakt.
               </AlertDialogBody>
 
@@ -260,7 +260,7 @@ export const EventPage = () => {
                   Annuleer
                 </Button>
                 <Button colorScheme="red" onClick={handleDelete} ml={3}>
-                  Verwijder
+                  Delete
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>

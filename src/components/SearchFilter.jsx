@@ -1,17 +1,17 @@
-//zoek functie
+//search functie
 
 import { Flex, Input, Select } from "@chakra-ui/react";
 import { useState } from "react";
 //------------------
 
-//1️⃣ State aanmaken
+//1️⃣ State create
 //2️⃣ Filterlogica schrijven
-//3️⃣ Functies maken voor zoek- en filterveranderingen
-//4️⃣ UI bouwen met zoek- en filtervelden
+//3️⃣ Functies maken voor search- en filterveranderingen
+//4️⃣ UI bouwen met search- en filtervelden
 //5️⃣ Component in de pagina gebruiken
 export const SearchFilter = ({ events, categories, onFilter }) => {
   //benodigen props v.d andere component
-  //1️⃣ State aanmaken
+  //1️⃣ State create
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -36,7 +36,7 @@ export const SearchFilter = ({ events, categories, onFilter }) => {
     onFilter(filteredEvents);
   };
 
-  //3️⃣ Functies maken voor zoek- en filterveranderingen
+  //3️⃣ Functies maken voor search- en filterveranderingen
   const handleSearch = (e) => {
     //zoekmachineveld als er wat wordt ingevoerd
     const term = e.target.value;
@@ -50,7 +50,7 @@ export const SearchFilter = ({ events, categories, onFilter }) => {
     applyFilter(searchTerm, category);
   };
 
-  ////4️⃣ UI bouwen met zoek- en filtervelden
+  ////4️⃣ UI bouwen met search- en filtervelden
   return (
     <Flex
       justifyContent="center"

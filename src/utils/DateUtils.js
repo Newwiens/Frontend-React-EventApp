@@ -1,4 +1,4 @@
-// Formateren de datum en tijd
+// Formateren de date en time
 
 export const formatDate = (dateString) => {
   const date = new Date(dateString);

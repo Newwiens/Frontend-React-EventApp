@@ -1,4 +1,4 @@
-//Component in EventsPage:  Alleen de button voor Nieuwe evenement toevoegen
+//Component in EventsPage:  Alleen de button voor Nieuwe event add
 
 import { Button, Flex } from "@chakra-ui/react";
 import { useState } from "react";

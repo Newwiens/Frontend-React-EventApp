@@ -42,7 +42,7 @@ export const EventsPage = () => {
 
   console.log("Events data:", events);
 
-  //Functie om de nieuwe Event toevoegen en automatisch opnieuw laden
+  //Functie om de nieuwe Event add en automatisch opnieuw loading
   const handleNewEvent = async () => {
     try {
       const response = await fetch("http://localhost:3000/events"); // Haal de nieuwste events op
@@ -51,7 +51,7 @@ export const EventsPage = () => {
         throw new Error("Failed to update new Events");
       }
       const updatedEvents = await response.json();
-      setEvents(updatedEvents); // FIX: Gebruik juiste functie naam
+      setEvents(updatedEvents); // FIX: Gebruik juiste functie name
     } catch (error) {
       console.error("Error refreshing the events:", error);
     }
@@ -91,7 +91,7 @@ export const EventsPage = () => {
           </Flex>
         </Flex>
 
-        {/* Section toevoeging evenement */}
+        {/* Section toevoeging event */}
         <Flex>
           <ButtonAdd
             //props meegeven, anders werkt niet

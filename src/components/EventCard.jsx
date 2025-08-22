@@ -1,4 +1,4 @@
-//Component alleen de Evenement kaart
+//Component alleen de Event kaart
 
 import { Link } from "react-router-dom";
 import { Heading, Card, Flex, Text, Image, Tag } from "@chakra-ui/react";
@@ -20,7 +20,7 @@ export const EventCard = ({ event, creator }) => {
       >
         <Tag
           fontSize="0.5em"
-          position="absolute" // Plaats de tag absoluut
+          position="absolute" // Location de tag absoluut
           top="0.5rem"
           right="0.5rem" // Verplaats naar de rechterbovenhoek
           h="1rem"
@@ -71,7 +71,7 @@ export const EventCard = ({ event, creator }) => {
           >
             <Flex direction="row" gap="0.5rem" p="0.2rem 0.2rem 0.2rem 0.8rem">
               <Text w="2.8rem" fontWeight="700">
-                Datum:
+                Date:
               </Text>
               <Text w="auto">{formatDate(event.startTime)}</Text>
             </Flex>
@@ -82,7 +82,7 @@ export const EventCard = ({ event, creator }) => {
               p="0.2rem 0.2rem 0.2rem 0.8rem"
             >
               <Text w="2.8rem" fontWeight="700">
-                Tijd:
+                Time:
               </Text>
               <Text w="auto">
                 {formatTime(event.startTime)} t/m {formatTime(event.endTime)}{" "}

@@ -53,7 +53,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
     ) {
       toast({
         title: "Verplichte velden ontbreken",
-        description: "Titel, omschrijving, datum en tijd zijn verplicht.",
+        description: "Title, omschrijving, datum en tijd zijn verplicht.",
         status: "warning",
         duration: 4000,
         isClosable: true,
@@ -84,7 +84,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
       });
     } catch (err) {
       toast({
-        title: "Fout bij opslaan",
+        title: "Error bij opslaan",
         description: err.message || "Onbekende fout",
         status: "error",
         duration: 4000,
@@ -104,7 +104,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
       );
       if (!response.ok) throw new Error("Delete mislukt");
       toast({
-        title: "Evenement verwijderd",
+        title: "Event verwijderd",
         description: "Het evenement is succesvol verwijderd.",
         status: "success",
         duration: 4000,
@@ -115,7 +115,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
       navigate("/events");
     } catch (err) {
       toast({
-        title: "Fout bij verwijderen",
+        title: "Error bij verwijderen",
         description: err.message || "Onbekende fout",
         status: "error",
         duration: 4000,
@@ -131,11 +131,11 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Evenement bewerken</ModalHeader>
+          <ModalHeader>Event bewerken</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl mb={3}>
-              <FormLabel>Titel</FormLabel>
+              <FormLabel>Title</FormLabel>
               <Input
                 value={editData.title || ""}
                 onChange={(e) =>
@@ -145,7 +145,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
             </FormControl>
 
             <FormControl mb={3}>
-              <FormLabel>Beschrijving</FormLabel>
+              <FormLabel>Description</FormLabel>
               <Input
                 value={editData.description || ""}
                 onChange={(e) =>
@@ -155,7 +155,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
             </FormControl>
 
             <FormControl mb={3}>
-              <FormLabel>Locatie</FormLabel>
+              <FormLabel>Location</FormLabel>
               <Input
                 value={editData.location || ""}
                 onChange={(e) =>
@@ -164,7 +164,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
               />
             </FormControl>
 
-            {/* Start Datum en Tijd */}
+            {/* Start Date en Time */}
             <FormControl mb={3}>
               <FormLabel>Startdatum en tijd</FormLabel>
               <Input
@@ -176,7 +176,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
               />
             </FormControl>
 
-            {/* Eind Datum en Tijd */}
+            {/* Eind Date en Time */}
             <FormControl mb={3}>
               <FormLabel>Einddatum en tijd</FormLabel>
               <Input
@@ -206,7 +206,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
               onClick={handleSave}
               isLoading={isSaving}
             >
-              Opslaan
+              Save
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -221,7 +221,7 @@ export const Edit = ({ isOpen, onClose, eventData, onEventUpdated }) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Evenement verwijderen
+              Event verwijderen
             </AlertDialogHeader>
 
             <AlertDialogBody>

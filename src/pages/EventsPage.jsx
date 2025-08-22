@@ -11,14 +11,14 @@ export const EventsPage = () => {
   const [error, setError] = useState(null);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const categories = useCategories(); // gebruikt categoriecontext
-  const users = useUsers(); // Gebruikers via userContext
+  const users = useUsers(); // Users via userContext
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const eventsResponse = await fetch("http://localhost:3000/events");
         if (!eventsResponse.ok) {
-          throw new Error("Fout bij ophalen van gegevens");
+          throw new Error("Error bij ophalen van gegevens");
         }
 
         const eventsData = await eventsResponse.json();
@@ -101,7 +101,7 @@ export const EventsPage = () => {
           />
         </Flex>
 
-        {/* Section Evenement kaarten */}
+        {/* Section Event kaarten */}
 
         <Flex
           direction="column"

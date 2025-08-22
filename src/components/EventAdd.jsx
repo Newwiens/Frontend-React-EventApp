@@ -33,15 +33,15 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
   const fields = [
     { name: "newUser", placeholder: "Jouw naam", type: "text" },
     { name: "image", placeholder: "Alleen URL voor afbeelding", type: "text" },
-    { name: "title", placeholder: "Titel van het evenement", type: "text" },
+    { name: "title", placeholder: "Title van het evenement", type: "text" },
     {
       name: "description",
-      placeholder: "Beschrijving van het evenement",
+      placeholder: "Description van het evenement",
       type: "textarea",
     },
     {
       name: "location",
-      placeholder: "Locatie van het evenement",
+      placeholder: "Location van het evenement",
       type: "text",
     },
     { name: "startTime", placeholder: "Starttijd", type: "datetime-local" },
@@ -109,9 +109,9 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newUser),
           });
-          if (!usersResponse.ok) throw new Error("Gebruiker toevoegen mislukt");
+          if (!usersResponse.ok) throw new Error("User toevoegen mislukt");
         } catch (error) {
-          setError("Fout bij het toevoegen van een nieuwe gebruiker.");
+          setError("Error bij het toevoegen van een nieuwe gebruiker.");
           return;
         }
       }
@@ -140,7 +140,7 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
         body: JSON.stringify(newEvent),
       });
 
-      if (!eventResponse.ok) throw new Error("Evenement toevoegen mislukt");
+      if (!eventResponse.ok) throw new Error("Event toevoegen mislukt");
 
       const savedEvent = await eventResponse.json();
       onAddEvent(savedEvent);
@@ -159,8 +159,8 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
         level: "",
       });
     } catch (error) {
-      setError("Fout bij het toevoegen van het evenement.");
-      console.error("Fout bij het toevoegen van het evenement:", error);
+      setError("Error bij het toevoegen van het evenement.");
+      console.error("Error bij het toevoegen van het evenement:", error);
     }
   };
 
@@ -227,7 +227,7 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
 
         <Select
           name="createdBy"
-          placeholder="Selecteer bestaande maker"
+          placeholder="Select bestaande maker"
           value={formData.createdBy}
           onChange={handleChange}
           size="sm"
@@ -303,7 +303,7 @@ export const EventAdd = ({ users, categories, onAddEvent }) => {
           _hover={{ bg: "blue.600", transform: "scale(1.02)" }}
           transition="all 0.2s ease-in-out"
         >
-          Evenement Toevoegen
+          Event Add
         </Button>
       </VStack>
     </Box>

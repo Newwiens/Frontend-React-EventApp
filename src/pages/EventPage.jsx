@@ -60,9 +60,9 @@ export const EventPage = () => {
       const response = await fetch(`http://localhost:3000/events/${id}`, {
         method: "DELETE",
       });
-      if (!response.ok) throw new Error("Verwijderen mislukt");
+      if (!response.ok) throw new Error("Delete mislukt");
       toast({
-        title: "Evenement verwijderd",
+        title: "Event verwijderd",
         description: "Het evenement is succesvol verwijderd.",
         status: "success",
         duration: 4000,
@@ -72,7 +72,7 @@ export const EventPage = () => {
       navigate("/events");
     } catch (err) {
       toast({
-        title: "Fout bij verwijderen",
+        title: "Error bij verwijderen",
         description: err.message || "Onbekende fout",
         status: "error",
         duration: 4000,
@@ -183,7 +183,7 @@ export const EventPage = () => {
               padding="0.5rem"
               w="100%"
             >
-              {/* Datum en tijd box */}
+              {/* Date en tijd box */}
               <Box w="50%">
                 <Flex direction="row" gap="0.5rem">
                   <Text w="2.1rem" fontWeight="700">
@@ -247,7 +247,7 @@ export const EventPage = () => {
           <AlertDialogOverlay>
             <AlertDialogContent>
               <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Evenement verwijderen
+                Event verwijderen
               </AlertDialogHeader>
 
               <AlertDialogBody>

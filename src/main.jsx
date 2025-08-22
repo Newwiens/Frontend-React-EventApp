@@ -1,3 +1,5 @@
+import { installMockApi } from "./utils/mockApi";
+installMockApi({ seedUrl: "/events.json" });
 import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";

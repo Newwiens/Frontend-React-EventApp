@@ -1,124 +1,140 @@
-/**
- * Lightweight client-side mock API to replace json-server calls on Vercel.
- * It intercepts fetch() requests to http://localhost:3000/* as well as
- * /events, /users, /categories and serves/updates data from localStorage.
- * Initial data is loaded from /events.json in the public folder.
- */
-export function installMockApi() {
-  const BASE = "http://localhost:3000";
-  const STORE_KEY = "eventapp:data:v1";
+// Lightweight client-side mock for json-server style endpoints
+// Intercepts fetch calls to http://localhost:3000/{resource} and serves data from localStorage,
+// seeded from /events.json on first load. Works on Vercel (no backend needed).
 
-  // Keep a reference to the real fetch
-  if (!window._realFetch) {
-    window._realFetch = window.fetch.bind(window);
+export function installMockApi(opts = {}) {
+  const seedUrl = opts.seedUrl || "/events.json";
+  const STORAGE_KEY = opts.storageKey || "eventapp:data:v1";
+  const originalFetch = window.fetch.bind(window);
+
+  // Utility: parse URL or Request to URL string
+  function toUrl(input) {
+    if (typeof input === "string") return input;
+    if (input && typeof input.url === "string") return input.url;
+    try { return String(input); } catch { return ""; }
   }
 
-  async function loadInitial() {
-    const stored = localStorage.getItem(STORE_KEY);
-    if (stored) {
-      try { return JSON.parse(stored); } catch {}
+  // Load DB from localStorage or seed
+  async function loadDb() {
+    const cached = localStorage.getItem(STORAGE_KEY);
+    if (cached) {
+      try { return JSON.parse(cached); } catch {}
     }
-    // Load initial snapshot from public/events.json
-    const res = await window._realFetch(`${import.meta.env.BASE_URL}events.json`);
-    if (!res.ok) throw new Error("Kon events.json niet laden");
-    const data = await res.json();
-    localStorage.setItem(STORE_KEY, JSON.stringify(data));
-    return data;
+    // Seed: fetch /events.json (if available), else empty arrays
+    let events = [];
+    try {
+      const res = await originalFetch(seedUrl);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          events = data;
+        } else if (Array.isArray(data.events)) {
+          events = data.events;
+        } else {
+          // try array-like fallback
+          events = data;
+        }
+      }
+    } catch {}
+    const db = { events, users: [], categories: [] };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    return db;
   }
 
-  let cache = null;
-  let loadPromise = loadInitial().then(d => (cache = d));
-
-  function persist() {
-    localStorage.setItem(STORE_KEY, JSON.stringify(cache));
+  function saveDb(db) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
   }
 
-  function jsonResponse(body, status = 200) {
-    return new Response(JSON.stringify(body), {
+  function json(data, status = 200) {
+    return new Response(JSON.stringify(data), {
       status,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" }
     });
   }
 
-  window.fetch = async function(input, init = {}) {
-    const url = typeof input === "string" ? input : input.url;
-    const method = (init.method || "GET").toUpperCase();
+  function notFound() { return json({ error: "Not found" }, 404); }
+  function badReq(msg = "Bad Request") { return json({ error: msg }, 400); }
 
-    const isApiUrl =
-      url.startsWith(BASE + "/") ||
-      url.startsWith("/events") ||
-      url.startsWith("/users") ||
-      url.startsWith("/categories");
+  function isLocalhostApi(u) {
+    try {
+      const url = new URL(u, window.location.origin);
+      // Match absolute http://localhost:3000/* or 127.0.0.1:3000
+      const hostMatch = (url.host === "localhost:3000" || url.host === "127.0.0.1:3000");
+      return hostMatch;
+    } catch {
+      return false;
+    }
+  }
 
-    if (!isApiUrl) {
-      // Any other URL: use the real fetch (assets, images, etc)
-      return window._realFetch(input, init);
+  // Parse path like /events/123
+  function parsePath(u) {
+    const url = new URL(u);
+    const segments = url.pathname.split("/").filter(Boolean);
+    const resource = segments[0] || "";
+    const id = segments[1] ? Number(segments[1]) : null;
+    return { resource, id, url };
+  }
+
+  async function handleRequest(input, init = {}) {
+    const urlStr = toUrl(input);
+    if (!isLocalhostApi(urlStr)) {
+      // pass-through for non-mocked requests
+      return originalFetch(input, init);
     }
 
-    if (!cache) await loadPromise;
+    const method = (init?.method || (typeof input !== "string" && input?.method) || "GET").toUpperCase();
+    const { resource, id } = parsePath(urlStr);
+    let db = await loadDb();
 
-    // Normalize path
-    const path = url.startsWith(BASE) ? url.slice(BASE.length) : url;
+    // Ensure resource array exists
+    if (!["events", "users", "categories"].includes(resource)) {
+      return notFound();
+    }
+    if (!Array.isArray(db[resource])) db[resource] = [];
 
-    // Helper to parse request body JSON safely
-    async function parseBody() {
-      const body = init.body;
-      if (!body) return {};
-      if (typeof body === "string") return JSON.parse(body);
-      if (body instanceof Blob) return JSON.parse(await body.text());
-      try { return JSON.parse(body); } catch { return {}; }
+    if (method === "GET") {
+      if (id == null) {
+        return json(db[resource]);
+      }
+      const item = db[resource].find(x => Number(x.id) === id);
+      return item ? json(item) : notFound();
     }
 
-    // ROUTES
-    if (path.startsWith("/events")) {
-      const parts = path.split("/").filter(Boolean); // e.g. ['events','123']
-      if (method === "GET") {
-        if (parts.length === 1) return jsonResponse(cache.events);
-        const id = parts[1];
-        const item = cache.events.find(e => String(e.id) === String(id));
-        return item ? jsonResponse(item) : jsonResponse({ message: "Not Found" }, 404);
-      }
-      if (method === "POST") {
-        const newItem = await parseBody();
-        cache.events.push(newItem);
-        persist();
-        return jsonResponse(newItem, 201);
-      }
-      if (method === "PATCH") {
-        const id = path.split("/")[2];
-        const patch = await parseBody();
-        const idx = cache.events.findIndex(e => String(e.id) === String(id));
-        if (idx === -1) return jsonResponse({ message: "Not Found" }, 404);
-        cache.events[idx] = { ...cache.events[idx], ...patch };
-        persist();
-        return jsonResponse(cache.events[idx]);
-      }
-      if (method === "DELETE") {
-        const id = path.split("/")[2];
-        const idx = cache.events.findIndex(e => String(e.id) === String(id));
-        if (idx === -1) return jsonResponse({ message: "Not Found" }, 404);
-        const [removed] = cache.events.splice(idx, 1);
-        persist();
-        return jsonResponse(removed);
-      }
+    if (method === "POST") {
+      let body = {};
+      try { body = init?.body ? JSON.parse(init.body) : {}; } catch { return badReq("Invalid JSON"); }
+      // naive id generation
+      const nextId = db[resource].length ? Math.max(...db[resource].map(x => Number(x.id)||0)) + 1 : 1;
+      const newItem = { id: nextId, ...body };
+      db[resource].push(newItem);
+      saveDb(db);
+      return json(newItem, 201);
     }
 
-    if (path.startsWith("/users")) {
-      const parts = path.split("/").filter(Boolean);
-      if (method === "GET") return jsonResponse(cache.users);
-      if (method === "POST") {
-        const newUser = await parseBody();
-        if (!newUser.id) newUser.id = Date.now();
-        cache.users.push(newUser);
-        persist();
-        return jsonResponse(newUser, 201);
-      }
+    if (method === "PATCH" || method === "PUT") {
+      if (id == null) return badReq("Missing id");
+      let body = {};
+      try { body = init?.body ? JSON.parse(init.body) : {}; } catch { return badReq("Invalid JSON"); }
+      const idx = db[resource].findIndex(x => Number(x.id) === id);
+      if (idx === -1) return notFound();
+      db[resource][idx] = { ...db[resource][idx], ...body };
+      saveDb(db);
+      return json(db[resource][idx]);
     }
 
-    if (path.startsWith("/categories")) {
-      if (method === "GET") return jsonResponse(cache.categories);
+    if (method === "DELETE") {
+      if (id == null) return badReq("Missing id");
+      const before = db[resource].length;
+      db[resource] = db[resource].filter(x => Number(x.id) != id);
+      const removed = db[resource].length < before;
+      saveDb(db);
+      return removed ? json({ deleted: true }) : notFound();
     }
 
-    return jsonResponse({ message: "Unsupported route" }, 400);
-  };
+    // Fallback
+    return badReq("Unsupported method");
+  }
+
+  // Patch global fetch
+  window.fetch = (input, init) => handleRequest(input, init);
 }
